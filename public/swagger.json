@@ -1,0 +1,103 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Member Service",
+        "description": "handle HeHa member and social login info",
+        "version": "1.0.0"
+    },
+    "host": "localhost:3000",
+    "schemes": [
+        "http"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/v1/members": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "select",
+                        "in": "query",
+                        "description": "fields of member that return, separated by space",
+                        "default": "username social",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "List all members",
+                "description": "List HeHa memebers\n",
+                "responses": {
+                    "200": {
+                        "description": "returns HeHa members in list",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "properties": {
+                                    "_id": {
+                                        "type": "string",
+                                        "description": "HeHa user ID"
+                                    },
+                                    "picture": {
+                                        "type": "string",
+                                        "description": "picture url from social platform"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "description": "username in random string, the password is same as username"
+                                    },
+                                    "social": {
+                                        "type": "string",
+                                        "description": "social platform uid, use for populate in next phase"
+                                    },
+                                    "social_info": {
+                                        "description": "social platform info, platform type, uid, picture",
+                                        "type": "object",
+                                        "properties": {
+                                            "picture": {
+                                                "type": "string",
+                                                "description": "picture url from social platform"
+                                            },
+                                            "platform": {
+                                                "type": "string",
+                                                "description": "type of social platform (wechat) or (weibo)"
+                                            },
+                                            "uid": {
+                                                "type": "string",
+                                                "description": "picture url from social platform"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Error": {
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
